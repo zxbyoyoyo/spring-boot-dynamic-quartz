@@ -1,0 +1,86 @@
+server:
+  port: 8090
+  servlet:
+    context-path: /iknows_task
+
+# 默认的profile为dev，其他环境通过指定启动参数使用不同的profile，比如：
+#   测试环境：java -jar *.jar --spring.profiles.active=test
+#   生产环境：java -jar *.jar --spring.profiles.active=prod
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource   #这里是配置druid连接池，以下都是druid的配置信息
+    url: jdbc:mysql://10.50.1.191:3306/testQz1?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    driver-class-name: com.mysql.jdbc.Driver
+    username: dev_inews
+    password: devInews123!
+
+  #quartz相关属性配置
+  quartz:
+    properties:
+      org:
+        quartz:
+          scheduler:
+            instanceName: clusteredScheduler
+            instanceId: AUTO
+          jobStore:
+            class: org.quartz.impl.jdbcjobstore.JobStoreTX
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+            tablePrefix: QRTZ_
+            isClustered: true
+            clusterCheckinInterval: 10000
+            useProperties: false
+          threadPool:
+            class: org.quartz.simpl.SimpleThreadPool
+            threadCount: 10
+            threadPriority: 5
+            threadsInheritContextClassLoaderOfInitializingThread: true
+    #数据库方式
+    job-store-type: jdbc
+
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .ftl
+    check-template-location: true
+    encoding: UTF-8
+    servlet.content-type: text/html
+    mode: HTML5
+    cache: false
+
+
+  redis:
+    database: 2
+    host: 10.50.2.27
+    port: 6379
+    password:
+    timeout: 3600
+    jedis:
+      pool:
+        max-active: 100
+        max-wait: 5000
+        max-idle: 50
+        min-idle: 20
+
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**Mapper.xml    #把xml文件放在com.XX.mapper.*中可能会出现找到的问题，这里把他放在resource下的mapper中
+  typeAliasesPackage: com.uec.quartz.domain         #这里是实体类的位置，#实体扫描，多个package用逗号或者分号分隔
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+
+
+
+dubbo:
+  application:
+    id: iknows_task
+    name: iknows_task
+  protocol:
+    id: dubbo
+    port: 12345
+  registry:
+    id: iknows_dbservice
+    address: zookeeper://10.50.1.197:12181
+  service:
+    version: 1.0.0
+management:
+  port: 8091

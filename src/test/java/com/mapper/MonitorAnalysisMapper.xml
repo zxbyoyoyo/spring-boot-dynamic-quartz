@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.MonitorAnalysisMapper">
+  <resultMap id="BaseResultMap" type="com.model.MonitorAnalysis">
+    <id column="UUID" jdbcType="CHAR" property="uuid" />
+    <result column="UID" jdbcType="CHAR" property="uid" />
+    <result column="PID" jdbcType="CHAR" property="pid" />
+    <result column="EMO_INDEX" jdbcType="DOUBLE" property="emoIndex" />
+    <result column="INSERT_TIME" jdbcType="DATE" property="insertTime" />
+    <result column="REPORT_TYPE" jdbcType="BIT" property="reportType" />
+    <result column="DATA_STATE" jdbcType="TINYINT" property="dataState" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_USER" jdbcType="CHAR" property="createUser" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_USER" jdbcType="CHAR" property="updateUser" />
+    <result column="PLAN_NAME" jdbcType="VARCHAR" property="planName" />
+    <result column="REPORT_NAME" jdbcType="VARCHAR" property="reportName" />
+    <result column="PLAN_TYPE" jdbcType="BIT" property="planType" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.model.MonitorAnalysisWithBLOBs">
+    <result column="MEDIA_TYPE" jdbcType="LONGVARCHAR" property="mediaType" />
+    <result column="REGION" jdbcType="LONGVARCHAR" property="region" />
+    <result column="SITE_RATE" jdbcType="LONGVARCHAR" property="siteRate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    UUID, UID, PID, EMO_INDEX, INSERT_TIME, REPORT_TYPE, DATA_STATE, CREATE_TIME, CREATE_USER, 
+    UPDATE_TIME, UPDATE_USER, PLAN_NAME, REPORT_NAME, PLAN_TYPE
+  </sql>
+  <sql id="Blob_Column_List">
+    MEDIA_TYPE, REGION, SITE_RATE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from iknows_monitor_analysis
+    where UUID = #{uuid,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from iknows_monitor_analysis
+    where UUID = #{uuid,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.model.MonitorAnalysisWithBLOBs">
+    insert into iknows_monitor_analysis (UUID, UID, PID, EMO_INDEX, 
+      INSERT_TIME, REPORT_TYPE, DATA_STATE, 
+      CREATE_TIME, CREATE_USER, UPDATE_TIME, 
+      UPDATE_USER, PLAN_NAME, REPORT_NAME, 
+      PLAN_TYPE, MEDIA_TYPE, REGION, 
+      SITE_RATE)
+    values (#{uuid,jdbcType=CHAR}, #{uid,jdbcType=CHAR}, #{pid,jdbcType=CHAR}, #{emoIndex,jdbcType=DOUBLE}, 
+      #{insertTime,jdbcType=DATE}, #{reportType,jdbcType=BIT}, #{dataState,jdbcType=TINYINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createUser,jdbcType=CHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{updateUser,jdbcType=CHAR}, #{planName,jdbcType=VARCHAR}, #{reportName,jdbcType=VARCHAR}, 
+      #{planType,jdbcType=BIT}, #{mediaType,jdbcType=LONGVARCHAR}, #{region,jdbcType=LONGVARCHAR}, 
+      #{siteRate,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.model.MonitorAnalysisWithBLOBs">
+    insert into iknows_monitor_analysis
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        UUID,
+      </if>
+      <if test="uid != null">
+        UID,
+      </if>
+      <if test="pid != null">
+        PID,
+      </if>
+      <if test="emoIndex != null">
+        EMO_INDEX,
+      </if>
+      <if test="insertTime != null">
+        INSERT_TIME,
+      </if>
+      <if test="reportType != null">
+        REPORT_TYPE,
+      </if>
+      <if test="dataState != null">
+        DATA_STATE,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createUser != null">
+        CREATE_USER,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateUser != null">
+        UPDATE_USER,
+      </if>
+      <if test="planName != null">
+        PLAN_NAME,
+      </if>
+      <if test="reportName != null">
+        REPORT_NAME,
+      </if>
+      <if test="planType != null">
+        PLAN_TYPE,
+      </if>
+      <if test="mediaType != null">
+        MEDIA_TYPE,
+      </if>
+      <if test="region != null">
+        REGION,
+      </if>
+      <if test="siteRate != null">
+        SITE_RATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        #{uuid,jdbcType=CHAR},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=CHAR},
+      </if>
+      <if test="pid != null">
+        #{pid,jdbcType=CHAR},
+      </if>
+      <if test="emoIndex != null">
+        #{emoIndex,jdbcType=DOUBLE},
+      </if>
+      <if test="insertTime != null">
+        #{insertTime,jdbcType=DATE},
+      </if>
+      <if test="reportType != null">
+        #{reportType,jdbcType=BIT},
+      </if>
+      <if test="dataState != null">
+        #{dataState,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=CHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        #{updateUser,jdbcType=CHAR},
+      </if>
+      <if test="planName != null">
+        #{planName,jdbcType=VARCHAR},
+      </if>
+      <if test="reportName != null">
+        #{reportName,jdbcType=VARCHAR},
+      </if>
+      <if test="planType != null">
+        #{planType,jdbcType=BIT},
+      </if>
+      <if test="mediaType != null">
+        #{mediaType,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="region != null">
+        #{region,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="siteRate != null">
+        #{siteRate,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.model.MonitorAnalysisWithBLOBs">
+    update iknows_monitor_analysis
+    <set>
+      <if test="uid != null">
+        UID = #{uid,jdbcType=CHAR},
+      </if>
+      <if test="pid != null">
+        PID = #{pid,jdbcType=CHAR},
+      </if>
+      <if test="emoIndex != null">
+        EMO_INDEX = #{emoIndex,jdbcType=DOUBLE},
+      </if>
+      <if test="insertTime != null">
+        INSERT_TIME = #{insertTime,jdbcType=DATE},
+      </if>
+      <if test="reportType != null">
+        REPORT_TYPE = #{reportType,jdbcType=BIT},
+      </if>
+      <if test="dataState != null">
+        DATA_STATE = #{dataState,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null">
+        CREATE_USER = #{createUser,jdbcType=CHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        UPDATE_USER = #{updateUser,jdbcType=CHAR},
+      </if>
+      <if test="planName != null">
+        PLAN_NAME = #{planName,jdbcType=VARCHAR},
+      </if>
+      <if test="reportName != null">
+        REPORT_NAME = #{reportName,jdbcType=VARCHAR},
+      </if>
+      <if test="planType != null">
+        PLAN_TYPE = #{planType,jdbcType=BIT},
+      </if>
+      <if test="mediaType != null">
+        MEDIA_TYPE = #{mediaType,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="region != null">
+        REGION = #{region,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="siteRate != null">
+        SITE_RATE = #{siteRate,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where UUID = #{uuid,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.model.MonitorAnalysisWithBLOBs">
+    update iknows_monitor_analysis
+    set UID = #{uid,jdbcType=CHAR},
+      PID = #{pid,jdbcType=CHAR},
+      EMO_INDEX = #{emoIndex,jdbcType=DOUBLE},
+      INSERT_TIME = #{insertTime,jdbcType=DATE},
+      REPORT_TYPE = #{reportType,jdbcType=BIT},
+      DATA_STATE = #{dataState,jdbcType=TINYINT},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_USER = #{createUser,jdbcType=CHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_USER = #{updateUser,jdbcType=CHAR},
+      PLAN_NAME = #{planName,jdbcType=VARCHAR},
+      REPORT_NAME = #{reportName,jdbcType=VARCHAR},
+      PLAN_TYPE = #{planType,jdbcType=BIT},
+      MEDIA_TYPE = #{mediaType,jdbcType=LONGVARCHAR},
+      REGION = #{region,jdbcType=LONGVARCHAR},
+      SITE_RATE = #{siteRate,jdbcType=LONGVARCHAR}
+    where UUID = #{uuid,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.model.MonitorAnalysis">
+    update iknows_monitor_analysis
+    set UID = #{uid,jdbcType=CHAR},
+      PID = #{pid,jdbcType=CHAR},
+      EMO_INDEX = #{emoIndex,jdbcType=DOUBLE},
+      INSERT_TIME = #{insertTime,jdbcType=DATE},
+      REPORT_TYPE = #{reportType,jdbcType=BIT},
+      DATA_STATE = #{dataState,jdbcType=TINYINT},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_USER = #{createUser,jdbcType=CHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_USER = #{updateUser,jdbcType=CHAR},
+      PLAN_NAME = #{planName,jdbcType=VARCHAR},
+      REPORT_NAME = #{reportName,jdbcType=VARCHAR},
+      PLAN_TYPE = #{planType,jdbcType=BIT}
+    where UUID = #{uuid,jdbcType=CHAR}
+  </update>
+</mapper>
